@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aviato | E-commerce template</title>
+{% load static %}
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Construction Html5 Template">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="author" content="Themefisher">
+<meta name="generator" content="Themefisher Constra HTML Template v1.0">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}" />
+<link rel="stylesheet" href="{% static 'plugins/themefisher-font/style.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/animate/animate.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/slick/slick-theme.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body id="body">
+
+	<section class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="content">
+						<h1 class="page-name">{{item.item_name}}</h1>
+						<ol class="breadcrumb">
+							<li><a href="/">Home</a></li>
+							<li><a href="/logout">Logout</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+<section class="single-product">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+			</div>
+			
+		</div>
+		<div class="row mt-20"> -->
+			<div class="col-md-5">
+			
+							
+							
+			<div class="col-md-7">
+				<div class="single-product-details">
+					<h2></h2>
+					<img width="650px" src="{{item.image.url}}">
+					<p class="product-price">${{item.price}}</p>
+					
+					<p class="product-description mt-20">
+					{{item.desc}}</p>
+
+					<div class="product-quantity">
+						<span>Quantity:</span>
+						<div class="product-quantity-slider">
+							<input id="product-quantity" type="text" value="0" name="product-quantity">
+						</div>
+					</div>
+					<div class="product-category">
+						<span>Category:</span>
+						<ul>
+							<li><a href="/display_cat/{{item.cat.id}}">{{item.cat.cat_name}}</a></li>
+						</ul>
+					</div>
+					{% if request.session.id %}
+					<a href="/add_to_cart/{{item.id}}" class="btn btn-main mt-20">Add To Cart</a>
+					{% else %}
+					<a href="/login" class="btn btn-main mt-20">Login to Buy It</a>
+					{% endif %}
+				</div>
+				<h2>Reviews:</h2>
+				{% for review in reviews %}
+					{% if review.item.id == item.id%}
+						<h3>{{review.title}}</h3>
+						<p>stars: {{review.stars}}</p>
+						<p>{{review.review}}</p>
+						<p>Reviewed by {{review.user.first_name}} {{review.user.last_name}}</p>
+					{% endif %}
+				{% endfor %}
+				<form class="text-left clearfix" action="/add_review/{{item.id}}" method="POST">
+					{% csrf_token %}
+					<div class="form-group">
+						<input type="text" class="form-control"  placeholder="Review Title" name="title">
+					</div>
+					<textarea name="review" class="form-control" placeholder="Add your review here"></textarea>
+        <p>Rating:</p>
+				<select name="stars">
+					<option value="1">1 Star</option>
+					<option value="2">2 Star</option>
+					<option value="3">3 Star</option>
+					<option value="4">4 Star</option>	
+					<option value="5">5 Star</option>	
+				</select>
+					<div class="text-center">
+						<button type="submit" style="margin-top: 10px;" class="btn btn-main text-center">Add Review</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	
+<section class="products related-products section">
+	<div class="container">
+		<div class="row">
+			<div class="title text-center">
+				<h2>Related Products</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="product-item">
+					<div class="product-thumb">
+						<span class="bage">Sale</span>
+						<img class="img-responsive" src="images/shop/products/product-5.jpg" alt="product-img" />
+						<div class="preview-meta">
+							<ul>
+								<li>
+									<span  data-toggle="modal" data-target="#product-modal">
+										<i class="tf-ion-ios-search"></i>
+									</span>
+								</li>
+								<li>
+			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
+								</li>
+								<li>
+									<a href="#!"><i class="tf-ion-android-cart"></i></a>
+								</li>
+							</ul>
+                      	</div>
+					</div>
+					<div class="product-content">
+						<h4><a href="product-single.html">Reef Boardsport</a></h4>
+						<p class="price">$200</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="product-item">
+					<div class="product-thumb">
+						<img class="img-responsive" src="images/shop/products/product-1.jpg" alt="product-img" />
+						<div class="preview-meta">
+							<ul>
+								<li>
+									<span  data-toggle="modal" data-target="#product-modal">
+										<i class="tf-ion-ios-search-strong"></i>
+									</span>
+								</li>
+								<li>
+			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
+								</li>
+								<li>
+									<a href="#!"><i class="tf-ion-android-cart"></i></a>
+								</li>
+							</ul>
+                      	</div>
+					</div>
+					<div class="product-content">
+						<h4><a href="product-single.html">Rainbow Shoes</a></h4>
+						<p class="price">$200</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="product-item">
+					<div class="product-thumb">
+						<img class="img-responsive" src="images/shop/products/product-2.jpg" alt="product-img" />
+						<div class="preview-meta">
+							<ul>
+								<li>
+									<span  data-toggle="modal" data-target="#product-modal">
+										<i class="tf-ion-ios-search"></i>
+									</span>
+								</li>
+								<li>
+			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
+								</li>
+								<li>
+									<a href="#!"><i class="tf-ion-android-cart"></i></a>
+								</li>
+							</ul>
+                      	</div>
+					</div>
+					<div class="product-content">
+						<h4><a href="product-single.html">Strayhorn SP</a></h4>
+						<p class="price">$230</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="product-item">
+					<div class="product-thumb">
+						<img class="img-responsive" src="images/shop/products/product-3.jpg" alt="product-img" />
+						<div class="preview-meta">
+							<ul>
+								<li>
+									<span  data-toggle="modal" data-target="#product-modal">
+										<i class="tf-ion-ios-search"></i>
+									</span>
+								</li>
+								<li>
+			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
+								</li>
+								<li>
+									<a href="#!"><i class="tf-ion-android-cart"></i></a>
+								</li>
+							</ul>
+                      	</div>
+					</div>
+					<div class="product-content">
+						<h4><a href="product-single.html">Bradley Mid</a></h4>
+						<p class="price">$200</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+
+
+
+<!-- Modal -->
+<div class="modal product-modal fade" id="product-modal">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<i class="tf-ion-close"></i>
+	</button>
+  	<div class="modal-dialog " role="document">
+    	<div class="modal-content">
+	      	<div class="modal-body">
+	        	<div class="row">
+	        		<div class="col-md-8">
+	        			<div class="modal-image">
+		        			<img class="img-responsive" src="images/shop/products/modal-product.jpg" />
+	        			</div>
+	        		</div>
+	        		<div class="col-md-3">
+	        			<div class="product-short-details">
+	        				<h2 class="product-title">GM Pendant, Basalt Grey</h2>
+	        				<p class="product-price">$200</p>
+	        				<p class="product-short-description">
+	        					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem iusto nihil cum. Illo laborum numquam rem aut officia dicta cumque.
+	        				</p>
+	        				<a href="#!" class="btn btn-main">Add To Cart</a>
+	        				<a href="#!" class="btn btn-transparent">View Product Details</a>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+    	</div>
+  	</div>
+</div>
+<footer class="footer section text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="social-media">
+					<li>
+						<a href="https://www.facebook.com/themefisher">
+							<i class="tf-ion-social-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/themefisher">
+							<i class="tf-ion-social-instagram"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.twitter.com/themefisher">
+							<i class="tf-ion-social-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.pinterest.com/themefisher/">
+							<i class="tf-ion-social-pinterest"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="footer-menu text-uppercase">
+					<li>
+						<a href="contact.html">CONTACT</a>
+					</li>
+					<li>
+						<a href="shop.html">SHOP</a>
+					</li>
+					<li>
+						<a href="pricing.html">Pricing</a>
+					</li>
+					<li>
+						<a href="contact.html">PRIVACY POLICY</a>
+					</li>
+				</ul>
+				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+    
+    <!-- Main jQuery -->
+    <script src="{% static 'plugins/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap 3.1 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- Bootstrap Touchpin -->
+    <script src="{% static 'plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <!-- Instagram Feed Js -->
+    <script src="{% static 'plugins/instafeed/instafeed.min.js' %}"></script>
+    <!-- Video Lightbox Plugin -->
+    <sc ript src="{% static 'plugins/ekko-lightbox/dist/ekko-lightbox.min.js' %}"></script>
+    <!-- Count Down Js -->
+    <script src="{% static 'plugins/syo-timer/build/jquery.syotimer.min.js' %}"></script>
+
+    <!-- slick Carousel -->
+    <script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+    <script src="{% static 'plugins/slick/slick-animation.min.js' %}"></script>
+
+    <!-- Google Mapl -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+    <script type="text/javascript" src="{% static 'plugins/google-map/gmap.js' %}"></script>
+
+    <!-- Main Js File -->
+    <script src="{% static 'js/script.js' %}"></script>
+
+
+
+  </body>
+  </html>
