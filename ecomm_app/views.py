@@ -42,8 +42,8 @@ def process_login(request):
 
 def logout(request):
     if Cart.objects.count() > 0:
-        this_cart = Cart.objects.get(id=request.session['cart_id'])
-        this_cart.delete()
+        print(Cart.objects.count())
+        Cart.objects.all().delete
         request.session.flush()
         return redirect('/')
     else:
@@ -51,32 +51,23 @@ def logout(request):
         return redirect('/')
 
 
-def index(request):
-    
+def index(request): 
     if request.session.is_empty():
         context = {
-        'items': Item.objects.all(),
-        'cats': Cat.objects.all(),
-    }
+            'users': User.objects.all(),
+            'items': Item.objects.all(),
+            'cats': Cat.objects.all(),
+            'carts': Cart.objects.all()
+        }
         return render(request, 'index.html', context)
     else:
-        if len(Cart.objects.filter(user=request.session['id'])) > 0:
-            context = {
-                'user': User.objects.get(id=request.session['id']),
-                'items': Item.objects.all(),
-                'cats': Cat.objects.all(),
-                'carts': Cart.objects.all(),
-                'cart': Cart.objects.get(id=request.session['cart_id'])
-            }
-            return render(request, 'index.html', context)
-        else:
-            context = {
-                'user': User.objects.get(id=request.session['id']),
-                'items': Item.objects.all(),
-                'cats': Cat.objects.all(),
-                'carts': Cart.objects.all(),
-            }
-            return render(request, 'index.html', context)
+        context = {
+            'user': User.objects.get(id=request.session['id']),
+            'items': Item.objects.all(),
+            'cats': Cat.objects.all(),
+            'carts': Cart.objects.all(),
+        }
+        return render(request, 'index.html', context)
 
 def show_empty_cart(request):
     return render(request, 'empty_cart.html')

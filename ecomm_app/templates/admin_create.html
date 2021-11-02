@@ -1,66 +1,20 @@
-<!-- 
-THEME: Aviato | E-commerce template
-VERSION: 1.0.0
-AUTHOR: Themefisher
-
-HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
-DEMO: https://demo.themefisher.com/aviato/
-GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
-
-WEBSITE: https://themefisher.com
-TWITTER: https://twitter.com/themefisher
-FACEBOOK: https://www.facebook.com/themefisher
--->
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-
-<!-- Basic Page Needs
-  ================================================== -->
-<meta charset="utf-8">
-<title>Aviato | E-commerce template</title>
-{% load static %}
-
-<!-- Mobile Specific Metas
-================================================== -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Construction Html5 Template">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="author" content="Themefisher">
-<meta name="generator" content="Themefisher Constra HTML Template v1.0">
-
-<!-- Favicon -->
-<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}" />
-
-<!-- Themefisher Icon font -->
-<link rel="stylesheet" href="{% static 'plugins/themefisher-font/style.css' %}">
-<!-- bootstrap.min css -->
-<link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
-
-<!-- Animate css -->
-<link rel="stylesheet" href="{% static 'plugins/animate/animate.css' %}">
-<!-- Slick Carousel -->
-<link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
-<link rel="stylesheet" href="{% static 'plugins/slick/slick-theme.css' %}">
-
-<!-- Main Stylesheet -->
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Awful Poem Generator</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+     rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{% static "style.css"%}'>
+    <script src='main.js'></script>
 </head>
 <body id="body">
-
-<section class="signin-page account">
-    <div class="container">
-        <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="block text-center">
-            <a class="logo" href="index.html">
-                <img src="images/logo.png" alt="">
-            </a>
 <h3>add item</h3>
-<form class="text-left clearfix" action="/create_item" method="POST" enctype="multipart/form-data">
+<form id="form-container" action="/create_item" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
         <input type="text" class="form-control"  placeholder="Item Name" name="item_name">
@@ -81,12 +35,10 @@ FACEBOOK: https://www.facebook.com/themefisher
     <div class="form-group">
         <input type="file" class="form-control"  placeholder="Image" name="image" accept=".png, .jpg">
     </div>
-    <div class="text-center">
-        <button type="submit" class="btn btn-main text-center">Sign In</button>
-    </div>
+        <button type="submit" class="btn btn-main text-center">Add</button>
 </form>
 <h3>add category</h3>
-<form class="text-left clearfix" action="/create_cat" method="POST" enctype="multipart/form-data">
+<form id="form-container" action="/create_cat" method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 <input type="text" class="form-control" name="cat_name" placeholder="Category Name">
 <div class="text-center">
