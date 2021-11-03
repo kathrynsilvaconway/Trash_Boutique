@@ -2,6 +2,16 @@ body {
   background-color: black;
   color: violet;
 }
+#wrapper {
+  display: inline-block;
+}
+#navbar {
+  width: 100%;
+  display: inline-block;
+}
+#container {
+  display: inline-block;
+}
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -15,12 +25,14 @@ h1 {
 .product-container {
   width: 650px;
   display: inline-block;
+  vertical-align: top;
 
 }
 .product-box {
   width: 200px;
   display: inline-block;
   vertical-align: top;
+  margin-top: 10px;
 }
 .product-box img {
   width: 190px;

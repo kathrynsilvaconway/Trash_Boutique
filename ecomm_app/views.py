@@ -41,14 +41,10 @@ def process_login(request):
     return redirect('/')
 
 def logout(request):
-    if Cart.objects.count() > 0:
-        print(Cart.objects.count())
-        Cart.objects.all().delete
-        request.session.flush()
-        return redirect('/')
-    else:
-        request.session.flush()
-        return redirect('/')
+    Cart.objects.all().delete()
+    request.session.flush()
+    print('COOOOOOOOOOWWWW', Cart.objects.count())
+    return redirect('/')
 
 
 def index(request): 
@@ -108,6 +104,7 @@ def display_product(request, item_id):
 def add_to_cart(request, item_id):
     
     this_item= Item.objects.get(id=item_id)
+    print('COOOOOOOWWWWWWWWWWWW', Cart.objects.count())
     if Cart.objects.count() > 0:
         print(Cart.objects.count())
         this_cart = Cart.objects.get(id=request.session['cart_id'])
@@ -203,7 +200,7 @@ def display_checkout(request):
             'shipping': shipping,
             'total': total
         }
-        return render(request, 'checkout.html', context)
+        return render(request, 'display_checkout.html', context)
     else:
         return redirect('/')
 
