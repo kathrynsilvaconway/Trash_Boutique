@@ -48,7 +48,7 @@ def logout(request):
 
 
 def index(request): 
-    if request.session.is_empty():
+    if len(request.session.keys()) < 1:
         context = {
             'users': User.objects.all(),
             'items': Item.objects.all(),
@@ -102,9 +102,7 @@ def display_product(request, item_id):
     return render(request, 'display_product.html', context)
 
 def add_to_cart(request, item_id):
-    
     this_item= Item.objects.get(id=item_id)
-    print('COOOOOOOWWWWWWWWWWWW', Cart.objects.count())
     if Cart.objects.count() > 0:
         print(Cart.objects.count())
         this_cart = Cart.objects.get(id=request.session['cart_id'])
@@ -175,6 +173,9 @@ def display_cart(request):
             'cart': Cart.objects.get(id=request.session['cart_id'])
         }
         return render(request, 'cart.html', context)
+
+def display_empty_cart(request):
+    return render(request, 'empty_cart.html')
 
 def remove_from_cart(request, item_id):
     this_cart = Cart.objects.get(id=request.session['cart_id'])

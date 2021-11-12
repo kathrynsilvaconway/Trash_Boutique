@@ -19,33 +19,30 @@
 {% endfor %}
 
 
-              <form method="post">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="">Item Name</th>
-                      <th class="">Item Price</th>
-                      <th class="">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-					{% for product in cart.items.all %}
-                    <tr class="">
-                      <td class="">
-						  <div class="product-info">
-                          <img width="80" src="{{product.image.url}}" alt="" />
-                          <a href="#!">{{product.item_name}}</a>
-                        </div>
-                      </td>
-                      <td class="">${{product.price}}</td>
-                      <td class="">
-						  <a class="product-remove" href="/remove_from_cart/{{product.id}}">Remove</a>
-						</td>
-                    </tr>
-					{% endfor %}
-                  </tbody>
-                </table>
-                <a href="/display_checkout" class="btn btn-secondary">Checkout</a>
-              </form>
+{% for product in cart.items.all %}
+<table id="table">
+  <thead>
+    <tr>
+      <th>""</th>
+      <th class="">Item Name</th>
+      <th class="">Item Price</th>
+      <th class="">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <img width="80" src="{{product.image.url}}" alt="" />
+        <td><a href="/single_product/{{product.id}}">{{product.item_name}}</a></td>
+        <td>${{product.price}}</td>
+        <td>
+          <a class="product-remove" href="/remove_from_cart/{{product.id}}">Remove</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <form method="post">
+      <a href="/display_checkout" class="btn btn-secondary">Checkout</a>
+    </form>
   </body>
   </html>

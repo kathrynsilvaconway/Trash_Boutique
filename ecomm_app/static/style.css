@@ -5,6 +5,10 @@ body {
 #wrapper {
   display: inline-block;
 }
+
+#table {
+  color: violet;
+}
 #navbar {
   width: 100%;
   display: inline-block;
