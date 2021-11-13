@@ -16,7 +16,11 @@
 			{% if request.session.id %}
 				<p>Hi,{{user.first_name}}</p>
 				<a href="/display_orders">Your orders</a>
-				<a href="/display_cart">Cart({{item_count}})cow</a>
+				{% if cart.items.count > 0 %}
+					<a href="/display_cart">Cart({{cart.items.count}})cow</a>
+					{% else%}
+					<a href="/display_empty_cart">Cart(0)</a>
+				{% endif %}
 				<a href="/logout">Logout</a>
 			{% else %}
 				<a href="/login">Login Here</a>

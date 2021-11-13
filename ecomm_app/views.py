@@ -43,12 +43,12 @@ def process_login(request):
 def logout(request):
     Cart.objects.all().delete()
     request.session.flush()
-    print('COOOOOOOOOOWWWW', Cart.objects.count())
     return redirect('/')
 
 
 def index(request): 
     if len(request.session.keys()) < 1:
+        print('COOOOOOOOOOWWWW', Cart.objects.count())
 
         context = {
             'users': User.objects.all(),
@@ -58,16 +58,26 @@ def index(request):
         }
         return render(request, 'index.html', context)
     else:
-        if Cart.objects.filter(user = request.session['id']).exists():
-            print('MARINA DEL RAY')
-        context = {
-            'user': User.objects.get(id=request.session['id']),
-            'items': Item.objects.all(),
-            'cats': Cat.objects.all(),
-            'carts': Cart.objects.all(),
-            'item_count': Cart.objects.count()
-        }
-        return render(request, 'index.html', context)
+        if Cart.objects.count() > 0:
+            print('COOOOOOOOOOWWWW', Cart.objects.count())
+            context = {
+                'user': User.objects.get(id=request.session['id']),
+                'items': Item.objects.all(),
+                'cats': Cat.objects.all(),
+                'carts': Cart.objects.all(),
+                'cart': Cart.objects.get(id=request.session['cart_id'])
+            }
+            return render(request, 'index.html', context)
+        else:
+            print('ppppppiiiiiiiiigggggggggg', Cart.objects.count())
+            context = {
+                'user': User.objects.get(id=request.session['id']),
+                'items': Item.objects.all(),
+                'cats': Cat.objects.all(),
+                'carts': Cart.objects.all(),
+            }
+            return render(request, 'index.html', context)
+
 
 def show_empty_cart(request):
     return render(request, 'empty_cart.html')
