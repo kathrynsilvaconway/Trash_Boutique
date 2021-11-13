@@ -49,6 +49,7 @@ def logout(request):
 
 def index(request): 
     if len(request.session.keys()) < 1:
+
         context = {
             'users': User.objects.all(),
             'items': Item.objects.all(),
@@ -57,11 +58,14 @@ def index(request):
         }
         return render(request, 'index.html', context)
     else:
+        if Cart.objects.filter(user = request.session['id']).exists():
+            print('MARINA DEL RAY')
         context = {
             'user': User.objects.get(id=request.session['id']),
             'items': Item.objects.all(),
             'cats': Cat.objects.all(),
             'carts': Cart.objects.all(),
+            'item_count': Cart.objects.count()
         }
         return render(request, 'index.html', context)
 
