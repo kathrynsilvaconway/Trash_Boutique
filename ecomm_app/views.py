@@ -158,6 +158,12 @@ def delete_item(request, item_id):
     item.delete()
     return redirect('/3227751215')
 
+def delete_review(request, review_id):
+    review = Review.objects.get(id=review_id)
+    review.delete()
+    return redirect('/')
+
+
 def render_cat_page(request):
     return render(request, 'add_cat.html')
 
@@ -256,6 +262,8 @@ def add_review(request, item_id):
         review = request.POST['review'],
         user = User.objects.get(id=request.session['id']),
         item = Item.objects.get(id=item_id),
-        stars = request.POST['stars']
+        stars = request.POST['stars'],
     )
+
+    
     return redirect(f'/single_product/{item_id}')

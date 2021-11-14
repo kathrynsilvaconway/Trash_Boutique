@@ -70,7 +70,17 @@ class Item(models.Model):
     image = models.ImageField(upload_to="images/")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
+    def avg_stars(self):
+        total = 0
+        list = []
+        for x in self.item_reviews.all():
+             total += x.stars
+             list.append(x.stars)
+             avg = total / len(list)
+        return avg
+        
+
 class Review(models.Model):
     review = models.TextField()
     title = models.TextField()

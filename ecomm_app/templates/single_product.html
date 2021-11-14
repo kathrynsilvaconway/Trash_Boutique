@@ -21,21 +21,25 @@
 		<img width="290px" src="{{item.image.url}}">
 		<p class="product-price">${{item.price}}</p>
 		<p>{{item.desc}}</p>
+		<p>Rating: {{item.avg_stars}} stars</p>		
 		<a href="/display_cat/{{item.cat.id}}">{{item.cat.cat_name}}</a></li>
-		{% if request.session.id %}
-			<a href="/add_to_cart/{{item.id}}" class="btn btn-main mt-20">Add To Cart</a>
-		{% else %}
-			<a href="/login" class="btn btn-main mt-20">Login to Buy It</a>
-		{% endif %}
+			{% if request.session.id %}
+				<a href="/add_to_cart/{{item.id}}" class="btn btn-main mt-20">Add To Cart</a>
+			{% else %}
+				<a href="/login" class="btn btn-main mt-20">Login to Buy It</a>
+			{% endif %}
+			
 	</div>
 	<div id="form-container">
 		<h2>Reviews:</h2>
 		{% for review in reviews %}
 			{% if review.item.id == item.id%}
 				<h4>{{review.title}}</h4>
+				<h4>{{review.stars_test}}</h4>
 				<p>stars: {{review.stars}}</p>
 				<p>{{review.review}}</p>
 				<p>Reviewed by {{review.user.first_name}} {{review.user.last_name}}</p>
+				<a href="/delete_review/{{review.id}}">delete</a>
 			{% endif %}
 		{% endfor %}
 		<form action="/add_review/{{item.id}}" method="POST">

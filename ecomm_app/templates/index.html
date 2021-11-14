@@ -17,8 +17,8 @@
 				<p>Hi,{{user.first_name}}</p>
 				<a href="/display_orders">Your orders</a>
 				{% if cart.items.count > 0 %}
-					<a href="/display_cart">Cart({{cart.items.count}})cow</a>
-					{% else%}
+					<a href="/display_cart">Cart({{cart.items.count}})</a>
+				{% else%}
 					<a href="/display_empty_cart">Cart(0)</a>
 				{% endif %}
 				<a href="/logout">Logout</a>
@@ -35,13 +35,13 @@
 					<h4><a href="/single_product/{{item.id}}">{{item.item_name}}</a></h4>
 					<p>${{item.price}}</p>
 					{% if request.session.id %}
-					<form action="/add_to_cart/{{item.id}}">
-						<input type="submit" class="btn btn-secondary" value="Add To Cart">
-					</form>
+						<form action="/add_to_cart/{{item.id}}">
+							<input type="submit" class="btn btn-secondary" value="Add To Cart">
+						</form>
 					{% else %}
-					<form action="/login">
-						<input type="submit" class="btn btn-secondary" value="login to buy">
-					</form>
+						<form action="/login">
+							<input type="submit" class="btn btn-secondary" value="login to buy">
+						</form>
 					{% endif %}
 				</div>
 				{% endfor %}
