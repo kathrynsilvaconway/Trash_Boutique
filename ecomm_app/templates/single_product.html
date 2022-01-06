@@ -9,57 +9,82 @@
       crossorigin="anonymous">
     <link rel='stylesheet' type='text/css' media='screen' href='{% static "style.css"%}'>
 </head>
-<body>		
-		<a href="/">Home</a>
-		{% if request.session.id %}
-			<a href="/logout">Logout</a>
-		{% else %}
-			<a href="/login">Login Here</a>
-		{% endif %}
-		<div id="form-container">
-		<h1>{{item.item_name}}</h1>
-		<img width="290px" src="{{item.image.url}}">
-		<p class="product-price">${{item.price}}</p>
-		<p>{{item.desc}}</p>
-		<p>Rating: {{item.avg_stars}} stars</p>		
-		<a href="/display_cat/{{item.cat.id}}">{{item.cat.cat_name}}</a></li>
+	<body>		
+		<hr>
+		<div id="navbar">			
+			<a href="/"><h5>Home</h5></a>
 			{% if request.session.id %}
-				<a href="/add_to_cart/{{item.id}}" class="btn btn-main mt-20">Add To Cart</a>
+			<a href="/display_orders"><h5>My orders</h5></a>
+			{% if cart.items.count > 0 %}
+			<a href="/display_cart"><h5>My Cart({{cart.items.count}})</h5></a>
+			{% else%}
+			<a href="/display_empty_cart"><h5>Cart(0)</h5></a>
+			{% endif %}
+			<a href="/logout"><h5>Logout</h5></a>
 			{% else %}
-				<a href="/login" class="btn btn-main mt-20">Login to Buy It</a>
+			<a href="/login"><h5>Login Here and Get Shopping!</h5></a>
 			{% endif %}
-			
-	</div>
-	<div id="form-container">
-		<h2>Reviews:</h2>
-		{% for review in reviews %}
-			{% if review.item.id == item.id%}
-				<h4>{{review.title}}</h4>
-				<h4>{{review.stars_test}}</h4>
-				<p>stars: {{review.stars}}</p>
-				<p>{{review.review}}</p>
-				<p>Reviewed by {{review.user.first_name}} {{review.user.last_name}}</p>
-				<a href="/delete_review/{{review.id}}">delete</a>
-			{% endif %}
-		{% endfor %}
-		<form action="/add_review/{{item.id}}" method="POST">
-		{% csrf_token %}
-		<div class="form-group">
-			<input type="text" class="form-control"  placeholder="Review Title" name="title">
 		</div>
-		<textarea name="review" class="form-control" placeholder="Add your review here"></textarea>
-		<p>Rating:</p>
-		<select name="stars">
-			<option value="1">1 Star</option>
-			<option value="2">2 Star</option>
-			<option value="3">3 Star</option>
-			<option value="4">4 Star</option>	
-			<option value="5">5 Star</option>	
-		</select>
-			<div class="text-center">
-				<button type="submit" style="margin-top: 10px;" class="btn btn-main text-center">Add Review</button>
+		<hr>
+		<div>
+		</div id="single-wrapper">
+			<div id="form-container">
+				<h1>{{item.item_name}}</h1>
+				<img width="290px" src="{{item.image.url}}">
+				<a href="/display_cat/{{item.cat.id}}">{{item.cat.cat_name}}</a></li>
+				<p class="product-price">${{item.price}}</p>
+				<p>{{item.desc}}</p>
+				{% if item.avg_stars != False %}
+					<p>Rating: {{item.avg_stars}} stars</p>		
+				{% endif %}
+				{% if request.session.id %}
+					<a href="/add_to_cart/{{item.id}}" class="btn btn-secondary">Add To Cart</a>
+				{% else %}
+				{% endif %}	
+				{% if reviews %}
+					<h2 style="margin-top: 30px;">Reviews:</h2>
+				{% else %}
+					<h2>No reviews yet.</h2>
+				{% endif %}
+						
+				{% for review in reviews %}
+					{% if review.item.id == item.id%}
+						<div class="review-container">
+							<p>stars: {{review.stars}}</p>
+							<h4>{{review.title}}</h4>
+							<h5>{{review.review}}</h5>
+							<p>Reviewed by {{review.user.first_name}} {{review.user.last_name}}</p>
+							{% if review.user.id == requet.session.id %}
+								<a href="/delete_review/{{review.id}}">delete</a>
+							{% endif %}
+						</div>
+					{% endif %}
+				{% endfor %}
+					{% if request.session.id %}
+					<div id="review_add_container">
+						<form action="/add_review/{{item.id}}" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<input type="text" class="form-control"  placeholder="Review Title" name="title">
+							</div>
+							<textarea name="review" class="form-control" placeholder="Add your review here"></textarea>
+							<p>Rating:</p>
+							<select name="stars">
+								<option value="1">1 Star</option>
+								<option value="2">2 Star</option>
+								<option value="3">3 Star</option>
+								<option value="4">4 Star</option>	
+								<option value="5">5 Star</option>	
+							</select>
+							<div class="text-center">
+								<button type="submit" style="background-color: pink;" class="btn btn-main text-center">Add Review</button>
+							</div>
+						</form>
+					</div>
+					{% else%}
+						<a href="/login" class="btn btn-main mt-20">Login Here to Write a Review</a>
+					{% endif %}
+				</div>
 			</div>
-		</form>
-	</div>
-  </body>
-  </html>
+		</body>
+	</html>

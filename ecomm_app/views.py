@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 import bcrypt
+import random
 
 def render_login(request):
     return render(request, 'login.html')
@@ -47,12 +48,12 @@ def logout(request):
 
 
 def index(request): 
+    products = list(Item.objects.all())
     if len(request.session.keys()) < 1:
         print('COOOOOOOOOOWWWW', Cart.objects.count())
-
         context = {
             'users': User.objects.all(),
-            'items': Item.objects.all(),
+            'items': random.sample(products, 3),
             'cats': Cat.objects.all(),
             'carts': Cart.objects.all()
         }
@@ -62,7 +63,7 @@ def index(request):
             print('COOOOOOOOOOWWWW', Cart.objects.count())
             context = {
                 'user': User.objects.get(id=request.session['id']),
-                'items': Item.objects.all(),
+                'items': random.sample(products, 3),
                 'cats': Cat.objects.all(),
                 'carts': Cart.objects.all(),
                 'cart': Cart.objects.get(id=request.session['cart_id'])
@@ -72,10 +73,12 @@ def index(request):
             print('ppppppiiiiiiiiigggggggggg', Cart.objects.count())
             context = {
                 'user': User.objects.get(id=request.session['id']),
-                'items': Item.objects.all(),
+                'items': random.sample(products, 3),
                 'cats': Cat.objects.all(),
                 'carts': Cart.objects.all(),
             }
+            user = User.objects.get(id=request.session['id'])
+            print('MMMMMMOOOOOOOOSSSSSHHHHHHH', user.__dict__)
             return render(request, 'index.html', context)
 
 
@@ -111,7 +114,7 @@ def create_item(request):
 
 def display_product(request, item_id):
     context = {
-        'item': Item.objects.get(id=item_id)
+        'item': Item.objects.get(id=item_id),
     }
     return render(request, 'display_product.html', context)
 
@@ -151,7 +154,7 @@ def update_item(request, item_id):
     item.desc = request.POST['desc']
     item.cat = this_cat
     item.save()
-    return redirect('/3227751215')
+    return redirect(f'/3227751215_update/{item_id}')
 
 def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
@@ -174,19 +177,49 @@ def create_cat(request):
     return redirect('/3227751215')
 
 def single_product(request, item_id):
-
-    context = {
-        'item': Item.objects.get(id=item_id),
-        'reviews': Review.objects.all()
+    if len(request.session.keys()) < 1:
+        context = {
+            'item': Item.objects.get(id=item_id),
+            'reviews': Review.objects.all()
         }
-    return render(request, 'single_product.html', context)
+        return render(request, 'single_product.html', context)
+    else:
+        context = {
+            'item': Item.objects.get(id=item_id),
+            'reviews': Review.objects.all(),
+            'user': User.objects.get(id=request.session['id'])
+            }
+        return render(request, 'single_product.html', context)
 
 def display_cat(request, cat_id):
-    context = {
-        'cat': Cat.objects.get(id=cat_id),
-        'items': Item.objects.all()
-    }
-    return render(request, 'display_cat.html', context)
+    if len(request.session.keys()) < 1:
+        print('1ST IF IS TRUE')
+        context = {
+            'items': Item.objects.all(),
+            'cat': Cat.objects.get(id=cat_id),
+        }
+        return render(request, 'display_cat.html', context)
+    else:
+        if Cart.objects.count() > 0:
+            print('2nd IF IS TRUE')
+            context = {
+                'user': User.objects.get(id=request.session['id']),
+                'items': Item.objects.all(),
+                'cat': Cat.objects.get(id=cat_id),
+                'carts': Cart.objects.all(),
+                'cart': Cart.objects.get(id=request.session['cart_id'])
+            }
+            return render(request, 'display_cat.html', context)
+        else:
+            print('3rd IF IS TRUE')
+            context = {
+                'user': User.objects.get(id=request.session['id']),
+                'items': Item.objects.all(),
+                'cat': Cat.objects.get(id=cat_id),
+                'carts': Cart.objects.all(),
+            }
+            return render(request, 'display_cat.html', context)
+
 
 def display_cart(request):
         context = {

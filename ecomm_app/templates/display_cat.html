@@ -9,26 +9,49 @@
       crossorigin="anonymous">
     <link rel='stylesheet' type='text/css' media='screen' href='{% static "style.css"%}'>
 </head>
-
-<body id="body">
-	<h1>OLD FOOD</h1>
-	{% if request.session.id %}
-		<p>Hi,{{user.first_name}}</p>
-		<li><a href="/logout">Logout</a></li>
-	{% else %}
-		<a href="/login">Login Here</a>
-	{% endif %}
-		{% for item in items %}
-		{% if item.cat.id == cat.id%}
-			<h4><a href="/single_product/{{item.id}}">{{item.item_name}}</a></h4>
-			<img style="width: 30%;" src="{{item.image.url}}">
-			<p>${{item.price}}</p>
-				{% if request.session.id %}
-					<a href="/add_to_cart/{{item.id}}" class="btn btn-secondary">Add To Cart</a>	
-				{% else %}
-					<a href="/login" class="btn btn-secondary">Login To Buy</a>
-				{% endif %}
+<body>
+	<div id="wrapper">
+		<h1>LITERALLY MY TRASH</h1>
+		<hr>
+		<div id="navbar">			
+			<a href="/"><h5>Home</h5></a>
+			{% if request.session.id %}
+			<a href="/display_orders"><h5>My orders</h5></a>
+			{% if cart.items.count > 0 %}
+			<a href="/display_cart"><h5>My Cart({{cart.items.count}})</h5></a>
+			{% else%}
+			<a href="/display_empty_cart"><h5>Cart(0)</h5></a>
 			{% endif %}
-			{% endfor %}
+			<a href="/logout"><h5>Logout</h5></a>
+			{% else %}
+			<a href="/login"><h5>Login Here and Get Shopping!</h5></a>
+			{% endif %}
+		</div>
+		<hr>
+		<div>
+		<div id="content">
+			<div class="product-container">
+				<h2>{{cat.cat_name}}</h2>
+				{% for item in items %}
+					{% if item.cat.id == cat.id %}
+					<div class="product-box">
+						<img src="{{item.image.url}}" alt="product-img">	
+						<h4><a href="/single_product/{{item.id}}">{{item.item_name}}</a></h4>
+						<p>${{item.price}}</p>
+						{% if request.session.id %}
+							<form action="/add_to_cart/{{item.id}}">
+								<input type="submit" class="btn btn-secondary" value="Add To Cart">
+							</form>
+						{% else %}
+							<form action="/login">
+								<input type="submit" class="btn btn-secondary" value="login to buy">
+							</form>
+						{% endif %}
+					</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
   </body>
   </html>

@@ -14,6 +14,22 @@
 </head>
 
 <body id="body">
+  <hr>
+		<div id="navbar">			
+			<a href="/"><h5>Home</h5></a>
+			{% if request.session.id %}
+			<a href="/display_orders"><h5>My orders</h5></a>
+			{% if cart.items.count > 0 %}
+			<a href="/display_cart"><h5>My Cart({{cart.items.count}})</h5></a>
+			{% else%}
+			<a href="/display_empty_cart"><h5>Cart(0)</h5></a>
+			{% endif %}
+			<a href="/logout"><h5>Logout</h5></a>
+			{% else %}
+			<a href="/login"><h5>Login Here and Get Shopping!</h5></a>
+			{% endif %}
+		</div>
+		<hr>
 {% for x in cart.items.all %}
 	<p>{{x.item_name}}</p>
 {% endfor %}
@@ -21,14 +37,6 @@
 
 {% for product in cart.items.all %}
 <table id="table">
-  <thead>
-    <tr>
-      <th>""</th>
-      <th class="">Item Name</th>
-      <th class="">Item Price</th>
-      <th class="">Actions</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
         <img width="80" src="{{product.image.url}}" alt="" />

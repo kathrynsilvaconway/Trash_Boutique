@@ -47,7 +47,7 @@
     {% for item in cat.items.all %}
         <div class="item_block">
             <h5>{{item.item_name}}</h5>
-            <a href="/display_product/{{item.id}}"><img width="200" src="{{item.image.url}}"></a>
+            <a href="/single_product/{{item.id}}"><img width="200" src="{{item.image.url}}"></a>
             <p>Category: {{item.cat.cat_name}}</p>
             <h6>${{item.price}}</h6>
             <a href="/3227751215_update/{{item.id}}">update |</a>

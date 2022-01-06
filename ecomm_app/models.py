@@ -75,10 +75,10 @@ class Item(models.Model):
         total = 0
         list = []
         for x in self.item_reviews.all():
-             total += x.stars
-             list.append(x.stars)
-             avg = total / len(list)
-        return avg
+            total += x.stars
+            list.append(x.stars)
+            avg = total / len(list)
+        return round(avg, 1)
         
 
 class Review(models.Model):

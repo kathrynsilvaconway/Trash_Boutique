@@ -22,6 +22,8 @@ urlpatterns = [
     path('add_to_cart/<int:item_id>', views.add_to_cart),
     path('remove_from_cart/<int:item_id>', views.remove_from_cart),
     path('display_checkout', views.display_checkout),
+    path('3227751215_update/<int:item_id>',views.render_update_page),
+    path('update_item/<int:item_id>', views.update_item),
     path('3227751215/delete_item/<int:item_id>', views.delete_item),
     path('process_order', views.process_order),
     path('render_order_success', views.render_order_success),

@@ -13,16 +13,34 @@
 	</head>
 
 	<body>
-		<a href="/">Home</a>
-		<a href="/logout">Logout</a>
+		
+		<h1>LITERALLY MY TRASH</h1>
+		{% if request.session.id %}
+			<h4 style="text-align: center;">Hi,{{user.first_name}}</h4>
+		{% endif %}
+		<hr>
+		<div id="navbar">			
+			<a href="/"><h5>Home</h5></a>
+			{% if request.session.id %}
+			<a href="/display_orders"><h5>My orders</h5></a>
+			{% if cart.items.count > 0 %}
+			<a href="/display_cart"><h5>My Cart({{cart.items.count}})</h5></a>
+			{% else%}
+			<a href="/display_empty_cart"><h5>Cart(0)</h5></a>
+			{% endif %}
+			<a href="/logout"><h5>Logout</h5></a>
+			{% else %}
+			<a href="/login"><h5>Login Here and Get Shopping!</h5></a>
+			{% endif %}
+		</div>
+		<hr>
+		<h2 style="margin-bottom: 20px;">Your Previous Orders:</h2>
 		{% for order in user.orders.all %}
-			<h2>{{order.user.first_name}}'s Orders:</h2>
-			<hr>
-			<h4> Order Summary </h4>
-			<p>Order Number: 322-{{order.id}}</p>
-			<p> Order Date: {{order.created_at}}</p>
+		<div id="product-box">
+			<h5> Order Date: {{order.created_at}}</h5>
+			<h6>Order Number: 322-{{order.id}}</h6>
 			{% for item in order.items.all %}
-				<div class="media product-card">
+			<div class="media product-card">
 				<a class="pull-left" href="">
 					<img class="media-object" width="50px" src="{{item.image.url}}" alt="Image" />
 				</a>
@@ -30,13 +48,12 @@
 					<h4 class="media-heading"><a href="/single_product/{{item.id}}">{{item.item_name}}</a></h4>
 					<p class="price">1 x ${{item.price}}</p>
 				</div>
-				</div>
+			</div>
+		</div>
 		{% endfor %}
-	<p>Total: {{order.total}}</p>
-	<a href="/delete_order/{{order.id}}">Delete this order</a>
-	{% endfor %}
-
-
-
-  </body>
+		<p>Total: {{order.total}}</p>
+		<a href="/delete_order/{{order.id}}">Delete this order</a>
+		<hr>
+		{% endfor %}
+	</body>
   </html>

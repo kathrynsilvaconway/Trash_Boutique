@@ -10,7 +10,22 @@
     <link rel='stylesheet' type='text/css' media='screen' href='{% static "style.css"%}'>
 </head>
 <body>
-	<a href="/">Home</a>
+	<hr>
+		<div id="navbar">			
+			<a href="/"><h5>Home</h5></a>
+			{% if request.session.id %}
+			<a href="/display_orders"><h5>My orders</h5></a>
+			{% if cart.items.count > 0 %}
+			<a href="/display_cart"><h5>My Cart({{cart.items.count}})</h5></a>
+			{% else%}
+			<a href="/display_empty_cart"><h5>Cart(0)</h5></a>
+			{% endif %}
+			<a href="/logout"><h5>Logout</h5></a>
+			{% else %}
+			<a href="/login"><h5>Login Here and Get Shopping!</h5></a>
+			{% endif %}
+		</div>
+		<hr>
 	<table class="table">
 		<thead>
 		  <tr>

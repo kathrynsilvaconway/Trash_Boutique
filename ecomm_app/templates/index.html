@@ -11,29 +11,37 @@
 </head>
 <body>
 	<div id="wrapper">
+		<h1>LITERALLY MY TRASH</h1>
+		{% if request.session.id %}
+			<h4 style="text-align: center;">Hi,{{user.first_name}}</h4>
+		{% endif %}
+		<hr>
 		<div id="navbar">			
-			<h1>LITERALLY MY TRASH</h1>
 			{% if request.session.id %}
-				<p>Hi,{{user.first_name}}</p>
-				<a href="/display_orders">Your orders</a>
-				{% if cart.items.count > 0 %}
-					<a href="/display_cart">Cart({{cart.items.count}})</a>
-				{% else%}
-					<a href="/display_empty_cart">Cart(0)</a>
-				{% endif %}
-				<a href="/logout">Logout</a>
+			<a href="/display_orders"><h5>My orders</h5></a>
+			{% if cart.items.count > 0 %}
+			<a href="/display_cart"><h5>My Cart({{cart.items.count}})</h5></a>
+			{% else%}
+			<a href="/display_empty_cart"><h5>Cart(0)</h5></a>
+			{% endif %}
+			<a href="/logout"><h5>Logout</h5></a>
 			{% else %}
-				<a href="/login">Login Here</a>
+			<a href="/login"><h5>Login Here</h5></a>
 			{% endif %}
 		</div>
+		<hr>
+		<div>
 		<div id="content">
 			<div class="product-container">
-				<h2>All Products</h2>
+				<h2>Featured Products</h2>
 				{% for item in items %}
 				<div class="product-box">
 					<img src="{{item.image.url}}" alt="product-img">	
 					<h4><a href="/single_product/{{item.id}}">{{item.item_name}}</a></h4>
 					<p>${{item.price}}</p>
+					{% if item.avg_stars != False %}
+						<p>Rating: {{item.avg_stars}} stars</p>		
+					{% endif %}
 					{% if request.session.id %}
 						<form action="/add_to_cart/{{item.id}}">
 							<input type="submit" class="btn btn-secondary" value="Add To Cart">
@@ -47,9 +55,9 @@
 				{% endfor %}
 			</div>
 			<div class="product-container">
-				<h2>Shop by Category</h2>
+				<h2>Shop by Category:</h2>
 					{% for cat in cats %}
-						<a href="/display_cat/1"><h3>{{cat.cat_name}}</h3></a>
+						<a href="/display_cat/{{cat.id}}"><h6>{{cat.cat_name}}</h6></a>
 					{% endfor %}
 			</div>
 		</div>
